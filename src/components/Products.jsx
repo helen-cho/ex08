@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import {app} from '../firebase'
+import {getDatabase, ref, set, push} from 'firebase/database'
 
-const Products = () => {
+const Products = ({history}) => {
+    const db = getDatabase(app);
     const [query, setQuery] = useState('노트북')
     const [products, setProducts] = useState(null);
     const callAPI = async() => {
@@ -25,6 +28,20 @@ const Products = () => {
         callAPI();
     }
 
+    const onClickCart = (product) => {
+        if(!sessionStorage.getItem('email')) {
+            alert("로그인후 사용하세요!");
+            history.push('/login');
+        }else {
+            //장바구니에 상품저장
+            console.log(product);
+            let email=sessionStorage.getItem('email');
+            email = email.replace('@', '').replace('.', '');
+            set(ref(db, `cart/${email}/${product.productId}`), product);
+            alert('장바구니담기성공!');
+        }
+    }
+
     if(products === null) return <h1>로딩중......</h1>
     return (
         <div>
@@ -40,6 +57,7 @@ const Products = () => {
                         <img src={p.image}/>
                         <div className='ellipsis title'dangerouslySetInnerHTML={{__html: p.title}}></div>
                         <div>{p.lprice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원</div>
+                        <button onClick={()=>onClickCart(p)}>장바구니</button>
                     </div>    
                 )}
             </div>

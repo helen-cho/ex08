@@ -76,6 +76,7 @@ img {
   border-radius: 5px;
   border: 1px solid gray;
   margin-right: 10px;
+  cursor: pointer;
  }
 
  a {
@@ -85,4 +86,19 @@ img {
 
  a:hover {
   color: black;
+ }
+
+ table {
+  width: 100%;
+  margin: 0px auto;
+  border-collapse: collapse;
+ }
+
+ td {
+  border-bottom: 1px solid gray;
+  padding: 5px 10px;
+ }
+
+ thead {
+  text-align: center;
  }

@@ -24,7 +24,7 @@ const Login = ({history}) => {
         .then((success)=>{
             alert("로그인성공!");
             sessionStorage.setItem('email', email);
-            history.push('/');
+            history.go(-1);
         })
         .catch((error)=>{
             alert("로그인실패!" + error.message);
